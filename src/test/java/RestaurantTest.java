@@ -1,10 +1,17 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 
 class RestaurantTest {
@@ -68,4 +75,14 @@ class RestaurantTest {
                 ()->restaurant.removeFromMenu("French fries"));
     }
     //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+       @Test
+    public void get_total_price_of_the_items_in_the_order_should_return_expected_total_price(){
+        Item item1=restaurant.addItemToOrder("Sweet corn soup");
+        Item item2=restaurant.addItemToOrder("Vegetable lasagne");
+        List<Item> order = new ArrayList<Item>();
+        Collections.addAll(order,item1,item2);
+        int totalPrice = restaurant.getTotalPriceOfOrder(order);
+        assertThat(totalPrice,is(388));
+    }
 }
